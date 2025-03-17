@@ -238,4 +238,18 @@ document.getElementById('contact-form')?.addEventListener('submit', function(e) 
 document.addEventListener('DOMContentLoaded', () => {
     init();
     animate();
+});
+
+// Initialize Plyr video player
+document.addEventListener('DOMContentLoaded', () => {
+    const players = Array.from(document.querySelectorAll('.plyr')).map(p => new Plyr(p, {
+        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+        loadSprite: true,
+        iconUrl: 'https://cdn.plyr.io/3.7.8/plyr.svg',
+        blankVideo: 'https://cdn.plyr.io/static/blank.mp4',
+        quality: {
+            default: 720,
+            options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]
+        }
+    }));
 }); 
