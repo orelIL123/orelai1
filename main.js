@@ -16,13 +16,12 @@ const CURSOR_PARTICLE_COUNT = 50;
 
 // Firebase configuration
 const firebaseConfig = {
-    // כאן תצטרך להכניס את פרטי הקונפיגורציה שלך מ-Firebase Console
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    authDomain: "orel-ai.firebaseapp.com",
+    projectId: "orel-ai",
+    storageBucket: "orel-ai.appspot.com",
+    messagingSenderId: "XXXXXXXXXXXX",
+    appId: "1:XXXXXXXXXXXX:web:XXXXXXXXXXXX"
 };
 
 // Initialize Firebase
@@ -272,32 +271,33 @@ document.addEventListener('DOMContentLoaded', () => {
 // Load videos from Firebase Storage
 async function loadVideos() {
     try {
-        // לואי
-        const luaiRef = storage.ref('videos/luai/IMG_5177.MOV');
-        const luaiUrl = await luaiRef.getDownloadURL();
-        document.getElementById('luai-video').src = luaiUrl;
+        const videoElements = {
+            'luai-video': 'videos/luai/IMG_5177.MOV',
+            'mor-video': 'videos/MOR/IMG_5086.MOV',
+            'odeya-video': 'videos/ODEYA/IMG_5128.MOV',
+            'stefan-video': 'videos/STEFAN/IMG_4989.MOV',
+            'yasmin-duda-video': 'videos/MOR/YASMIN&DUDA/IMG_5078.MOV'
+        };
 
-        // מור
-        const morRef = storage.ref('videos/MOR/IMG_5086.MOV');
-        const morUrl = await morRef.getDownloadURL();
-        document.getElementById('mor-video').src = morUrl;
-
-        // אודיה
-        const odeyaRef = storage.ref('videos/ODEYA/IMG_5128.MOV');
-        const odeyaUrl = await odeyaRef.getDownloadURL();
-        document.getElementById('odeya-video').src = odeyaUrl;
-
-        // סטפן
-        const stefanRef = storage.ref('videos/STEFAN/IMG_4989.MOV');
-        const stefanUrl = await stefanRef.getDownloadURL();
-        document.getElementById('stefan-video').src = stefanUrl;
-
-        // יסמין ודודה
-        const yasminDudaRef = storage.ref('videos/MOR/YASMIN&DUDA/IMG_5078.MOV');
-        const yasminDudaUrl = await yasminDudaRef.getDownloadURL();
-        document.getElementById('yasmin-duda-video').src = yasminDudaUrl;
+        for (const [elementId, videoPath] of Object.entries(videoElements)) {
+            try {
+                const videoRef = storage.ref(videoPath);
+                const videoUrl = await videoRef.getDownloadURL();
+                const videoElement = document.getElementById(elementId);
+                if (videoElement) {
+                    videoElement.src = videoUrl;
+                    videoElement.parentElement.classList.add('video-loaded');
+                }
+            } catch (error) {
+                console.error(`Error loading video ${videoPath}:`, error);
+                const videoElement = document.getElementById(elementId);
+                if (videoElement) {
+                    videoElement.parentElement.classList.add('video-error');
+                }
+            }
+        }
     } catch (error) {
-        console.error('Error loading videos:', error);
+        console.error('Error initializing video loading:', error);
     }
 }
 
