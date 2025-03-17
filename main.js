@@ -17,9 +17,9 @@ const CURSOR_PARTICLE_COUNT = 50;
 // Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-    authDomain: "orel-ai.firebaseapp.com",
-    projectId: "orel-ai",
-    storageBucket: "orel-ai.appspot.com",
+    authDomain: "orelai.firebaseapp.com",
+    projectId: "orelai",
+    storageBucket: "orelai.appspot.com",
     messagingSenderId: "XXXXXXXXXXXX",
     appId: "1:XXXXXXXXXXXX:web:XXXXXXXXXXXX"
 };
@@ -272,21 +272,26 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadVideos() {
     try {
         const videoElements = {
-            'luai-video': 'videos/luai/IMG_5177.MOV',
-            'mor-video': 'videos/MOR/IMG_5086.MOV',
-            'odeya-video': 'videos/ODEYA/IMG_5128.MOV',
-            'stefan-video': 'videos/STEFAN/IMG_4989.MOV',
-            'yasmin-duda-video': 'videos/MOR/YASMIN&DUDA/IMG_5078.MOV'
+            'luai-video': 'luai/IMG_5177.MOV',
+            'mor-video': 'MOR/IMG_5086.MOV',
+            'odeya-video': 'ODEYA/IMG_5128.MOV',
+            'stefan-video': 'STEFAN/IMG_4989.MOV',
+            'yasmin-duda-video': 'MOR/YASMIN&DUDA/IMG_5078.MOV'
         };
 
         for (const [elementId, videoPath] of Object.entries(videoElements)) {
             try {
                 const videoRef = storage.ref(videoPath);
+                console.log(`Trying to load video: ${videoPath}`);
                 const videoUrl = await videoRef.getDownloadURL();
+                console.log(`Got URL for video: ${videoPath}`);
                 const videoElement = document.getElementById(elementId);
                 if (videoElement) {
                     videoElement.src = videoUrl;
                     videoElement.parentElement.classList.add('video-loaded');
+                    console.log(`Successfully loaded video: ${videoPath}`);
+                } else {
+                    console.error(`Could not find element with id: ${elementId}`);
                 }
             } catch (error) {
                 console.error(`Error loading video ${videoPath}:`, error);
@@ -303,5 +308,6 @@ async function loadVideos() {
 
 // Load videos when the page loads
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Page loaded, starting to load videos...');
     loadVideos();
 }); 
