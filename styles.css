@@ -306,6 +306,9 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background: #000;
+    aspect-ratio: 9/16;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
 .portfolio-item video {
@@ -313,6 +316,16 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
+    background: #000;
+}
+
+.portfolio-item video::-webkit-media-controls {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.portfolio-item video::-webkit-media-controls-panel {
+    display: flex !important;
+    opacity: 1 !important;
 }
 
 .plyr {
