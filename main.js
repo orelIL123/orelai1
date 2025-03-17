@@ -14,6 +14,21 @@ let particleGeometry, particleMaterial;
 let cursorParticles = [];
 const CURSOR_PARTICLE_COUNT = 50;
 
+// Firebase configuration
+const firebaseConfig = {
+    // כאן תצטרך להכניס את פרטי הקונפיגורציה שלך מ-Firebase Console
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const storage = firebase.storage();
+
 function init() {
     // Scene setup
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -252,4 +267,41 @@ document.addEventListener('DOMContentLoaded', () => {
             options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]
         }
     }));
+});
+
+// Load videos from Firebase Storage
+async function loadVideos() {
+    try {
+        // לואי
+        const luaiRef = storage.ref('videos/luai/IMG_5177.MOV');
+        const luaiUrl = await luaiRef.getDownloadURL();
+        document.getElementById('luai-video').src = luaiUrl;
+
+        // מור
+        const morRef = storage.ref('videos/MOR/IMG_5086.MOV');
+        const morUrl = await morRef.getDownloadURL();
+        document.getElementById('mor-video').src = morUrl;
+
+        // אודיה
+        const odeyaRef = storage.ref('videos/ODEYA/IMG_5128.MOV');
+        const odeyaUrl = await odeyaRef.getDownloadURL();
+        document.getElementById('odeya-video').src = odeyaUrl;
+
+        // סטפן
+        const stefanRef = storage.ref('videos/STEFAN/IMG_4989.MOV');
+        const stefanUrl = await stefanRef.getDownloadURL();
+        document.getElementById('stefan-video').src = stefanUrl;
+
+        // יסמין ודודה
+        const yasminDudaRef = storage.ref('videos/MOR/YASMIN&DUDA/IMG_5078.MOV');
+        const yasminDudaUrl = await yasminDudaRef.getDownloadURL();
+        document.getElementById('yasmin-duda-video').src = yasminDudaUrl;
+    } catch (error) {
+        console.error('Error loading videos:', error);
+    }
+}
+
+// Load videos when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    loadVideos();
 }); 
