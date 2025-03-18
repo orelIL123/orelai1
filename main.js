@@ -1,11 +1,12 @@
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    apiKey: "AIzaSyDtOYwSxSPQnLMJDpFx785PQdJuujvp5Ek",
     authDomain: "orelai.firebaseapp.com",
     projectId: "orelai",
-    storageBucket: "orelai.appspot.com",
-    messagingSenderId: "XXXXXXXXXXXX",
-    appId: "1:XXXXXXXXXXXX:web:XXXXXXXXXXXX"
+    storageBucket: "orelai.firebasestorage.app",
+    messagingSenderId: "132856983838",
+    appId: "1:132856983838:web:c04bd71a47ad5cbf66c10f",
+    measurementId: "G-T6H2Z4VK7R"
 };
 
 // Initialize Firebase
