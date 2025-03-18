@@ -304,111 +304,79 @@ body {
     position: relative;
     overflow: hidden;
     border-radius: 15px;
-    background: #000;
+    background-color: #000;
     aspect-ratio: 9/16;
-    max-width: 400px;
-    margin: 0 auto;
-    transition: transform 0.3s ease;
+    max-width: 100%;
+    margin: 1rem;
+    transition: all 0.3s ease;
 }
 
 .portfolio-item video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    background: #000;
-}
-
-.portfolio-item.video-loading::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-}
-
-.portfolio-item.video-loading::after {
-    content: 'טוען...';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-size: 1.2rem;
-    z-index: 2;
-}
-
-.portfolio-item.video-error::before {
-    content: 'שגיאה בטעינת הסרטון';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #ff4444;
-    font-size: 1.2rem;
-    text-align: center;
-    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .portfolio-item.video-loaded video {
     opacity: 1;
-    transition: opacity 0.3s ease;
 }
 
-.portfolio-item video::-webkit-media-controls {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.portfolio-item video::-webkit-media-controls-panel {
-    display: flex !important;
-    opacity: 1 !important;
-}
-
-.plyr {
-    border-radius: 10px;
-    --plyr-color-main: #ff3366;
-    --plyr-video-background: #000;
-    --plyr-menu-background: rgba(0, 0, 0, 0.8);
-    --plyr-menu-color: #fff;
-    --plyr-tooltip-background: rgba(0, 0, 0, 0.8);
-    --plyr-tooltip-color: #fff;
-}
-
-.plyr__video-embed {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-height: 300px;
-}
-
-.plyr__video-embed iframe {
+.portfolio-item::before {
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.overlay {
+.portfolio-item.video-loading::after {
+    content: "טוען...";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.2rem;
+    z-index: 2;
+}
+
+.portfolio-item.video-error::after {
+    content: "שגיאה בטעינת הסרטון";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: red;
+    font-size: 1.2rem;
+    z-index: 2;
+}
+
+.portfolio-item:hover::before {
+    opacity: 1;
+}
+
+.portfolio-item .overlay {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-    padding: 20px;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
     color: white;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
 }
 
 .portfolio-item:hover .overlay {
-    transform: translateY(0);
+    opacity: 1;
 }
 
 .portfolio-item h3 {
