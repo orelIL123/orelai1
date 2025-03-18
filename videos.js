@@ -1,48 +1,48 @@
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-    authDomain: "orelai-website.firebaseapp.com",
-    projectId: "orelai-website",
-    storageBucket: "orelai-website.appspot.com",
-    messagingSenderId: "123456789012",
-    appId: "1:123456789012:web:abcdef0123456789"
+    apiKey: "AIzaSyDtCVwSxSP0nLMJDpFx785PdQJuujvp5Ek",
+    authDomain: "orelai.firebaseapp.com",
+    projectId: "orelai",
+    storageBucket: "orelai.firebasestorage.app",
+    messagingSenderId: "132056983838",
+    appId: "1:132056983838:web:43f64f9ad32bd80266c10f",
+    measurementId: "G-BK92WDZVL4"
 };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+// Get a reference to storage
 const storage = firebase.storage();
 
-// Load videos from Firebase Storage
+// Function to load videos
 async function loadVideos() {
-    try {
-        const videoElements = {
-            'luai-video': 'luai/IMG_5177.MOV',
-            'mor-video': 'MOR/IMG_5086.MOV',
-            'odeya-video': 'ODEYA/IMG_5128.MOV',
-            'stefan-video': 'STEFAN/IMG_4989.MOV',
-            'yasmin-duda-video': 'MOR/YASMIN&DUDA/IMG_5078.MOV'
-        };
+    const videoElements = {
+        'luai-video': 'luai/IMG_5177.MOV',
+        'mor-video': 'MOR/IMG_5086.MOV',
+        'odeya-video': 'ODEYA/IMG_5128.MOV',
+        'stefan-video': 'STEFAN/IMG_4989.MOV',
+        'yasmin-duda-video': 'YASMIN&DUDA/IMG_5078.MOV'
+    };
 
-        for (const [elementId, videoPath] of Object.entries(videoElements)) {
-            try {
-                const videoRef = storage.ref(videoPath);
-                console.log(`Trying to load video: ${videoPath}`);
-                const videoUrl = await videoRef.getDownloadURL();
-                console.log(`Got URL for video: ${videoPath}`);
-                const videoElement = document.getElementById(elementId);
-                if (videoElement) {
-                    videoElement.src = videoUrl;
+    try {
+        for (const [elementId, path] of Object.entries(videoElements)) {
+            const videoElement = document.getElementById(elementId);
+            if (videoElement) {
+                const videoRef = storage.ref(path);
+                try {
+                    console.log(`Trying to load video: ${path}`);
+                    const url = await videoRef.getDownloadURL();
+                    console.log(`Got URL for video: ${path}`);
+                    videoElement.src = url;
                     videoElement.parentElement.classList.add('video-loaded');
-                    console.log(`Successfully loaded video: ${videoPath}`);
-                } else {
-                    console.error(`Could not find element with id: ${elementId}`);
-                }
-            } catch (error) {
-                console.error(`Error loading video ${videoPath}:`, error);
-                const videoElement = document.getElementById(elementId);
-                if (videoElement) {
+                    console.log(`Successfully loaded video: ${path}`);
+                } catch (error) {
+                    console.error(`Error loading video ${path}:`, error);
                     videoElement.parentElement.classList.add('video-error');
                 }
+            } else {
+                console.error(`Could not find element with id: ${elementId}`);
             }
         }
     } catch (error) {
@@ -50,7 +50,7 @@ async function loadVideos() {
     }
 }
 
-// Load videos when the page loads
+// Load videos when the page is ready
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Page loaded, starting to load videos...');
     loadVideos();
