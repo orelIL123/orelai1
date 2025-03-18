@@ -18,11 +18,11 @@ const storage = firebase.storage();
 // Function to load videos
 async function loadVideos() {
     const videoElements = {
-        'luai-video': '/luai/IMG_5177.MOV',
-        'mor-video': '/MOR/IMG_5086.MOV',
-        'odeya-video': '/ODEYA/IMG_5128.MOV',
-        'stefan-video': '/STEFAN/IMG_4989.MOV',
-        'yasmin-duda-video': '/YASMIN&DUDA/IMG_5078.MOV'
+        'luai-video': 'luai/IMG_5177.MOV',
+        'mor-video': 'MOR/IMG_5086.MOV',
+        'odeya-video': 'ODEYA/IMG_5128.MOV',
+        'stefan-video': 'STEFAN/IMG_4989.MOV',
+        'yasmin-duda-video': 'YASMIN&DUDA/IMG_5078.MOV'
     };
 
     try {
@@ -31,7 +31,7 @@ async function loadVideos() {
             if (videoElement) {
                 try {
                     console.log(`Trying to load video: ${path}`);
-                    const videoRef = storage.ref().child(path.substring(1)); // Remove leading slash
+                    const videoRef = storage.ref(path);
                     const url = await videoRef.getDownloadURL();
                     console.log(`Got URL for video: ${path}`);
                     videoElement.src = url;
