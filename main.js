@@ -1,3 +1,48 @@
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    authDomain: "orelai.firebaseapp.com",
+    projectId: "orelai",
+    storageBucket: "orelai.appspot.com",
+    messagingSenderId: "XXXXXXXXXXXX",
+    appId: "1:XXXXXXXXXXXX:web:XXXXXXXXXXXX"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const storage = firebase.storage();
+
+// Load videos from Firebase Storage
+async function loadVideos() {
+    const videoElements = {
+        'luai-video': 'luai/IMG_5177.MOV',
+        'mor-video': 'MOR/IMG_5086.MOV',
+        'odeya-video': 'ODEYA/IMG_5128.MOV',
+        'stefan-video': 'STEFAN/IMG_4989.MOV',
+        'yasmin-duda-video': 'YASMIN&DUDA/IMG_5078.MOV'
+    };
+
+    for (const [elementId, videoPath] of Object.entries(videoElements)) {
+        try {
+            const videoRef = storage.ref(videoPath);
+            const videoUrl = await videoRef.getDownloadURL();
+            const videoElement = document.getElementById(elementId);
+            if (videoElement) {
+                videoElement.querySelector('source').src = videoUrl;
+                videoElement.load();
+                videoElement.parentElement.classList.add('video-loaded');
+            }
+        } catch (error) {
+            console.error(`Error loading video ${videoPath}:`, error);
+            const videoElement = document.getElementById(elementId);
+            if (videoElement) {
+                videoElement.parentElement.classList.add('video-error');
+            }
+        }
+    }
+}
+
+// Initialize Three.js background
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Three.js scene
     const scene = new THREE.Scene();
@@ -43,4 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
+
+    // Load videos after Three.js is initialized
+    loadVideos();
 }); 
