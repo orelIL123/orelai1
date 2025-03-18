@@ -18,20 +18,20 @@ const storage = firebase.storage();
 // Function to load videos
 async function loadVideos() {
     const videoElements = {
-        'luai-video': 'luai/IMG_5177.MOV',
-        'mor-video': 'MOR/IMG_5086.MOV',
-        'odeya-video': 'ODEYA/IMG_5128.MOV',
-        'stefan-video': 'STEFAN/IMG_4989.MOV',
-        'yasmin-duda-video': 'YASMIN&DUDA/IMG_5078.MOV'
+        'luai-video': '/luai/IMG_5177.MOV',
+        'mor-video': '/MOR/IMG_5086.MOV',
+        'odeya-video': '/ODEYA/IMG_5128.MOV',
+        'stefan-video': '/STEFAN/IMG_4989.MOV',
+        'yasmin-duda-video': '/YASMIN&DUDA/IMG_5078.MOV'
     };
 
     try {
         for (const [elementId, path] of Object.entries(videoElements)) {
             const videoElement = document.getElementById(elementId);
             if (videoElement) {
-                const videoRef = storage.ref(path);
                 try {
                     console.log(`Trying to load video: ${path}`);
+                    const videoRef = storage.ref().child(path.substring(1)); // Remove leading slash
                     const url = await videoRef.getDownloadURL();
                     console.log(`Got URL for video: ${path}`);
                     videoElement.src = url;
@@ -39,6 +39,7 @@ async function loadVideos() {
                     console.log(`Successfully loaded video: ${path}`);
                 } catch (error) {
                     console.error(`Error loading video ${path}:`, error);
+                    console.error('Error details:', error.code, error.message);
                     videoElement.parentElement.classList.add('video-error');
                 }
             } else {
@@ -47,6 +48,7 @@ async function loadVideos() {
         }
     } catch (error) {
         console.error('Error initializing video loading:', error);
+        console.error('Error details:', error.code, error.message);
     }
 }
 
