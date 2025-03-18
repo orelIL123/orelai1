@@ -3,83 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OREL AI</title>
+    <title>OREL AI - סרטוני אי אי למוזיקאים</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <div id="background"></div>
-    
-    <header>
-        <h1>OREL AI</h1>
-        <p>תיק עבודות</p>
-    </header>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#home">
+                <span class="logo-text">OREL AI</span>
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="#home">דף הבית</a>
+            <a href="#about">אודות</a>
+            <a href="#portfolio">תיק עבודות</a>
+            <a href="#contact">צור קשר</a>
+            <a href="https://www.instagram.com/orel__ai/" target="_blank" class="instagram-link">
+                <i class="fab fa-instagram"></i>
+                @orel__ai
+            </a>
+        </div>
+    </nav>
 
-    <main>
-        <section id="portfolio">
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <video id="luai-video" autoplay loop muted playsinline>
-                        <source src="" type="video/quicktime">
-                    </video>
-                    <div class="portfolio-info">
-                        <h4>לואי</h4>
-                        <a href="https://www.instagram.com/luai_abed_/" target="_blank">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <video id="mor-video" autoplay loop muted playsinline>
-                        <source src="" type="video/quicktime">
-                    </video>
-                    <div class="portfolio-info">
-                        <h4>מור</h4>
-                        <a href="https://www.instagram.com/mor_cohen55/" target="_blank">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <video id="odeya-video" autoplay loop muted playsinline>
-                        <source src="" type="video/quicktime">
-                    </video>
-                    <div class="portfolio-info">
-                        <h4>עודיה</h4>
-                        <a href="https://www.instagram.com/odeya_pm/" target="_blank">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <video id="stefan-video" autoplay loop muted playsinline>
-                        <source src="" type="video/quicktime">
-                    </video>
-                    <div class="portfolio-info">
-                        <h4>סטפן</h4>
-                        <a href="https://www.instagram.com/stefan_ifraimov/" target="_blank">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <video id="yasmin-duda-video" autoplay loop muted playsinline>
-                        <source src="" type="video/quicktime">
-                    </video>
-                    <div class="portfolio-info">
-                        <h4>יסמין ודודה</h4>
-                        <a href="https://www.instagram.com/yasmin_duda/" target="_blank">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="glitch-title" data-text="OREL AI">OREL AI</h1>
+            <p>יוצרים חוויות מוזיקליות בעזרת בינה מלאכותית</p>
+            <a href="#contact" class="cta-button">צור קשר</a>
+        </div>
+        <div id="hero-3d" class="hero-3d"></div>
+    </section>
+
+    <section id="about" class="about">
+        <h2>אודות</h2>
+        <div class="about-content">
+            <p>אני יוצר סרטוני אי אי ייחודיים למוזיקאים, הופך את המוזיקה שלכם לדמויות מיוחדות ומנפיש אותן בצורה ייחודית.</p>
+        </div>
+    </section>
+
+    <section id="portfolio" class="portfolio">
+        <h2>תיק עבודות</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <video autoplay loop muted playsinline>
+                    <source src="videos/luai.MOV" type="video/mp4">
+                </video>
+                <div class="overlay">
+                    <h3>לואי LOAI</h3>
+                    <p>סרטון אי אי ייחודי למוזיקה של לואי</p>
+                    <div class="portfolio-meta">
+                        <span class="artist">לואי LOAI</span>
+                        <span class="date">2024</span>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+            <div class="portfolio-item">
+                <video autoplay loop muted playsinline>
+                    <source src="videos/mor.MOV" type="video/mp4">
+                </video>
+                <div class="overlay">
+                    <h3>מור MOR</h3>
+                    <p>סרטון אי אי דרמטי עם זום לעיניים</p>
+                    <div class="portfolio-meta">
+                        <span class="artist">מור MOR</span>
+                        <span class="date">2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <video autoplay loop muted playsinline>
+                    <source src="videos/odeya.MOV" type="video/mp4">
+                </video>
+                <div class="overlay">
+                    <h3>אודיה ODEYA</h3>
+                    <p>סרטון אי אי עם פרפרים מעופפים</p>
+                    <div class="portfolio-meta">
+                        <span class="artist">אודיה ODEYA</span>
+                        <span class="date">2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <video autoplay loop muted playsinline>
+                    <source src="videos/stefan.MOV" type="video/mp4">
+                </video>
+                <div class="overlay">
+                    <h3>סטפן STEFAN</h3>
+                    <p>סרטון אי אי עם אפקט אש דרמטי</p>
+                    <div class="portfolio-meta">
+                        <span class="artist">סטפן STEFAN</span>
+                        <span class="date">2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <video autoplay loop muted playsinline>
+                    <source src="videos/yasmin&duda.MOV" type="video/mp4">
+                </video>
+                <div class="overlay">
+                    <h3>יסמין ודודה YASMIN & DUDA</h3>
+                    <p>סרטון אי אי עם פרפרים מסביב</p>
+                    <div class="portfolio-meta">
+                        <span class="artist">יסמין ודודה YASMIN & DUDA</span>
+                        <span class="date">2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>צור קשר</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <p>
+                    <i class="fas fa-phone"></i>
+                    <a href="tel:0523985505" class="phone-number">052-398-5505</a>
+                </p>
+                <p>
+                    <i class="fab fa-instagram"></i>
+                    <a href="https://www.instagram.com/orel__ai/" target="_blank">@orel__ai</a>
+                </p>
+            </div>
+            <form id="contact-form">
+                <input type="text" placeholder="שם מלא" required>
+                <input type="email" placeholder="אימייל" required>
+                <textarea placeholder="הודעה" required></textarea>
+                <button type="submit">שלח</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/orel__ai/" target="_blank" class="instagram-link">
+                <i class="fab fa-instagram"></i>
+                @orel__ai
+            </a>
+        </div>
+        <p>&copy; 2024 OREL AI. כל הזכויות שמורות.</p>
+    </footer>
 
     <script src="main.js"></script>
 </body>
