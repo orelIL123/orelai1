@@ -8,31 +8,50 @@ let particles;
 async function loadVideos() {
     console.log("Starting to load videos");
     
-    // קישורים ישירים לסרטונים במקום דרך Firebase
+    // קישורים ישירים לסרטונים
     const videoElements = {
-        'luai-video': 'https://orelil123.github.io/orelai1/videos/LUAI/IMG_5177.MOV',
-        'mor-video': 'https://orelil123.github.io/orelai1/videos/MOR/IMG_5086.MOV',
-        'odeya-video': 'https://orelil123.github.io/orelai1/videos/ODEYA/IMG_5128.MOV',
-        'stefan-video': 'https://orelil123.github.io/orelai1/videos/STEFAN/IMG_4989.MOV',
-        'yasmin-duda-video': 'https://orelil123.github.io/orelai1/videos/YASMIN&DUDA/IMG_5078.MOV'
+        'luai-video': '/videos/LUAI/IMG_5177.MOV',
+        'mor-video': '/videos/MOR/IMG_5086.MOV',
+        'odeya-video': '/videos/ODEYA/IMG_5128.MOV',
+        'stefan-video': '/videos/STEFAN/IMG_4989.MOV',
+        'yasmin-duda-video': '/videos/YASMIN&DUDA/IMG_5078.MOV'
     };
 
-    for (const [elementId, videoUrl] of Object.entries(videoElements)) {
+    for (const [elementId, videoPath] of Object.entries(videoElements)) {
         try {
-            console.log(`Setting video URL: ${videoUrl}`);
+            console.log(`Setting video path: ${videoPath}`);
             const videoElement = document.getElementById(elementId);
             if (videoElement) {
-                const sourceElement = videoElement.querySelector('source');
-                sourceElement.src = videoUrl;
+                // הגדרת ה-src ישירות על אלמנט הווידאו
+                videoElement.src = videoPath;
+                
+                // הוספת טיפול בשגיאה - אם יש שגיאה, ננסה להגדיר את ה-src שוב
+                videoElement.onerror = function() {
+                    console.log(`Error loading video: ${videoPath}, trying alternative...`);
+                    const altPath = videoPath.replace('.MOV', '.mp4');
+                    videoElement.src = altPath;
+                    videoElement.load();
+                };
+                
                 videoElement.load();
-                videoElement.play().catch(e => console.log('Auto-play failed:', e));
+                const playPromise = videoElement.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        console.log('Auto-play failed:', e);
+                        // הסר את השימוש באוטו-פליי אם צריך
+                        videoElement.setAttribute('autoplay', false);
+                        videoElement.setAttribute('controls', true);
+                    });
+                }
+                
                 videoElement.parentElement.classList.add('video-loaded');
-                console.log(`Successfully loaded video: ${videoUrl}`);
+                console.log(`Successfully loaded video: ${videoPath}`);
             } else {
                 console.error(`Could not find element with id: ${elementId}`);
             }
         } catch (error) {
-            console.error(`Error loading video ${videoUrl}:`, error);
+            console.error(`Error loading video ${videoPath}:`, error);
             const videoElement = document.getElementById(elementId);
             if (videoElement) {
                 videoElement.parentElement.classList.add('video-error');
