@@ -314,16 +314,16 @@ body {
     margin-bottom: 2rem;
 }
 
-.portfolio-item video {
+.portfolio-item iframe {
     width: 100%;
     height: 100%;
+    border: none;
     object-fit: cover;
     transition: transform 0.5s ease;
-    display: block;
 }
 
-.portfolio-item:hover video {
-    transform: scale(1.05);
+.portfolio-item:hover iframe {
+    transform: scale(1.02);
 }
 
 /* הוספת מצב טעינה */
@@ -381,6 +381,10 @@ body {
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 2;
+}
+
+.portfolio-item:hover .overlay {
+    opacity: 1;
 }
 
 /* Contact Section */
