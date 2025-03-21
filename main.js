@@ -4,29 +4,38 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 let particles;
 
-// עבור כל פוסטים של אינסטגרם
-function initInstagramPosts() {
-    console.log("Initializing Instagram posts");
+// יצירת אינטראקציה עם אלמנטי הוידאו
+function initVideos() {
+    console.log("Initializing videos");
     
-    // Reload Instagram embed script when needed
-    if (window.instgrm) {
-        window.instgrm.Embeds.process();
-    }
-    
-    // Add overlay hover effect for Instagram embeds
+    // Add overlay hover effect for video elements
     const portfolioItems = document.querySelectorAll('.portfolio-item');
     
     portfolioItems.forEach(item => {
         const overlay = item.querySelector('.overlay');
+        const video = item.querySelector('video');
         
-        if (overlay) {
+        if (video && overlay) {
             // Show overlay on hover
             item.addEventListener('mouseenter', () => {
                 overlay.style.opacity = '1';
+                video.play().catch(e => console.log('Auto-play failed:', e));
             });
             
             item.addEventListener('mouseleave', () => {
                 overlay.style.opacity = '0';
+            });
+            
+            // טעינת הסרטון באתר
+            video.addEventListener('loadeddata', () => {
+                item.classList.add('video-loaded');
+                console.log('Video loaded successfully');
+            });
+            
+            // טיפול בשגיאות טעינה
+            video.addEventListener('error', () => {
+                item.classList.add('video-error');
+                console.error('Error loading video');
             });
         }
     });
@@ -119,8 +128,8 @@ function init() {
     // Initialize section transitions
     initSectionTransitions();
     
-    // Initialize Instagram posts instead
-    initInstagramPosts();
+    // Initialize videos
+    initVideos();
 }
 
 function initCursor() {
