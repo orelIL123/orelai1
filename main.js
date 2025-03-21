@@ -4,9 +4,23 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 let particles;
 
-// טיפול בפריטי התיק עבודות
+// טיפול בפריטי התיק עבודות ובהטמעת אינסטגרם
 function initPortfolioItems() {
     console.log("Initializing portfolio items");
+    
+    // טיפול בהטמעת אינסטגרם של מור
+    if (window.instgrm) {
+        console.log("Processing Instagram embeds");
+        window.instgrm.Embeds.process();
+    } else {
+        console.log("Instagram SDK not loaded, will retry");
+        setTimeout(() => {
+            if (window.instgrm) {
+                window.instgrm.Embeds.process();
+                console.log("Instagram embeds processed on retry");
+            }
+        }, 2000);
+    }
     
     const portfolioItems = document.querySelectorAll('.portfolio-item');
     
