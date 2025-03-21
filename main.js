@@ -4,48 +4,38 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 let particles;
 
-// יצירת אינטראקציה עם אלמנטי הוידאו
+// טיפול בסרטונים פשוט ואמין
 function initVideos() {
-    console.log("Initializing videos");
+    console.log("Initializing videos with a simpler approach");
     
-    // Add overlay hover effect for video elements
     const portfolioItems = document.querySelectorAll('.portfolio-item');
     
     portfolioItems.forEach(item => {
-        const overlay = item.querySelector('.overlay');
         const video = item.querySelector('video');
+        const overlay = item.querySelector('.overlay');
         
-        if (video && overlay) {
-            // מאזין לאירוע טעינת הסרטון
+        if (video) {
+            // טיפול בטעינת הסרטון
             video.addEventListener('loadeddata', () => {
-                // סימון שהסרטון נטען בהצלחה וניתן להציגו
+                console.log("Video loaded!");
                 item.classList.add('video-loaded');
-                console.log('Video loaded successfully');
             });
             
-            // טיפול בשגיאות טעינה
             video.addEventListener('error', (e) => {
+                console.error("Video error:", e);
                 item.classList.add('video-error');
-                console.error('Error loading video:', e);
             });
             
-            // צריך לאלץ טעינה מחדש של הסרטון
-            const currentSrc = video.querySelector('source').src;
-            video.querySelector('source').src = '';
-            video.load();
-            video.querySelector('source').src = currentSrc;
-            video.load();
-            
-            // Show overlay on hover
-            item.addEventListener('mouseenter', () => {
-                overlay.style.opacity = '1';
-                // ניסיון להפעלת הסרטון בעת מעבר עכבר
-                video.play().catch(e => console.log('Auto-play failed:', e));
-            });
-            
-            item.addEventListener('mouseleave', () => {
-                overlay.style.opacity = '0';
-            });
+            // הוספת אינטראקציה בין הסרטון למשתמש
+            if (overlay) {
+                item.addEventListener('mouseenter', () => {
+                    overlay.style.opacity = '1';
+                });
+                
+                item.addEventListener('mouseleave', () => {
+                    overlay.style.opacity = '0';
+                });
+            }
         }
     });
 }
