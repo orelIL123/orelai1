@@ -1,16 +1,10 @@
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyDtOYwSxSPQnLMJDpFx785PQdJuujvp5Ek",
-    authDomain: "orelai.firebaseapp.com",
-    projectId: "orelai",
-    storageBucket: "orelai.firebasestorage.app",
-    messagingSenderId: "132856983838",
-    appId: "1:132856983838:web:c04bd71a47ad5cbf66c10f",
-    measurementId: "G-T6H2Z4VK7R"
-};
+// Three.js setup
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+let particles;
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+// Get Firebase Storage reference
 const storage = firebase.storage();
 
 // Load videos from Firebase Storage
@@ -50,11 +44,6 @@ async function loadVideos() {
     }
 }
 
-// Three.js setup
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-let particles;
 let mouseX = 0;
 let mouseY = 0;
 let targetX = 0;
@@ -141,6 +130,9 @@ function init() {
     
     // Initialize section transitions
     initSectionTransitions();
+    
+    // Load videos from Firebase Storage
+    loadVideos();
 }
 
 function initCursor() {
@@ -286,8 +278,8 @@ document.getElementById('contact-form')?.addEventListener('submit', function(e) 
     this.reset();
 });
 
-// Initialize everything
-document.addEventListener('DOMContentLoaded', () => {
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
     init();
     animate();
 }); 
