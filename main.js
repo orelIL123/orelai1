@@ -16,26 +16,35 @@ function initVideos() {
         const video = item.querySelector('video');
         
         if (video && overlay) {
-            // Show overlay on hover
-            item.addEventListener('mouseenter', () => {
-                overlay.style.opacity = '1';
-                video.play().catch(e => console.log('Auto-play failed:', e));
-            });
-            
-            item.addEventListener('mouseleave', () => {
-                overlay.style.opacity = '0';
-            });
-            
-            // טעינת הסרטון באתר
+            // מאזין לאירוע טעינת הסרטון
             video.addEventListener('loadeddata', () => {
+                // סימון שהסרטון נטען בהצלחה וניתן להציגו
                 item.classList.add('video-loaded');
                 console.log('Video loaded successfully');
             });
             
             // טיפול בשגיאות טעינה
-            video.addEventListener('error', () => {
+            video.addEventListener('error', (e) => {
                 item.classList.add('video-error');
-                console.error('Error loading video');
+                console.error('Error loading video:', e);
+            });
+            
+            // צריך לאלץ טעינה מחדש של הסרטון
+            const currentSrc = video.querySelector('source').src;
+            video.querySelector('source').src = '';
+            video.load();
+            video.querySelector('source').src = currentSrc;
+            video.load();
+            
+            // Show overlay on hover
+            item.addEventListener('mouseenter', () => {
+                overlay.style.opacity = '1';
+                // ניסיון להפעלת הסרטון בעת מעבר עכבר
+                video.play().catch(e => console.log('Auto-play failed:', e));
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                overlay.style.opacity = '0';
             });
         }
     });

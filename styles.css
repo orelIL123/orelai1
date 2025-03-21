@@ -319,6 +319,7 @@ body {
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
+    display: block;
 }
 
 .portfolio-item:hover video {
@@ -334,7 +335,7 @@ body {
     transform: translate(-50%, -50%);
     color: white;
     font-size: 1.2rem;
-    z-index: 2;
+    z-index: 10;
     opacity: 1;
     transition: opacity 0.3s ease;
 }
