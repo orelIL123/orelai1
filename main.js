@@ -4,38 +4,24 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 let particles;
 
-// טיפול בסרטונים פשוט ואמין
+// טיפול באלמנטי הוידאו מיוטיוב בתיק העבודות
 function initVideos() {
-    console.log("Initializing videos with a simpler approach");
+    console.log("Initializing YouTube videos");
     
     const portfolioItems = document.querySelectorAll('.portfolio-item');
     
     portfolioItems.forEach(item => {
-        const video = item.querySelector('video');
         const overlay = item.querySelector('.overlay');
         
-        if (video) {
-            // טיפול בטעינת הסרטון
-            video.addEventListener('loadeddata', () => {
-                console.log("Video loaded!");
-                item.classList.add('video-loaded');
+        // הוספת אינטראקציה
+        if (overlay) {
+            item.addEventListener('mouseenter', () => {
+                overlay.style.opacity = '1';
             });
             
-            video.addEventListener('error', (e) => {
-                console.error("Video error:", e);
-                item.classList.add('video-error');
+            item.addEventListener('mouseleave', () => {
+                overlay.style.opacity = '0';
             });
-            
-            // הוספת אינטראקציה בין הסרטון למשתמש
-            if (overlay) {
-                item.addEventListener('mouseenter', () => {
-                    overlay.style.opacity = '1';
-                });
-                
-                item.addEventListener('mouseleave', () => {
-                    overlay.style.opacity = '0';
-                });
-            }
         }
     });
 }
@@ -164,20 +150,6 @@ function initPortfolio() {
     const portfolioItems = document.querySelectorAll('.portfolio-item');
     
     portfolioItems.forEach(item => {
-        const video = item.querySelector('video');
-        if (!video) return;
-        
-        item.addEventListener('mouseenter', () => {
-            video.play().catch(() => {
-                console.log('Video autoplay failed');
-            });
-        });
-        
-        item.addEventListener('mouseleave', () => {
-            video.pause();
-            video.currentTime = 0;
-        });
-
         // 3D Tilt effect
         item.addEventListener('mousemove', (e) => {
             const rect = item.getBoundingClientRect();

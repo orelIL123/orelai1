@@ -7,24 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-    <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDxkqhg5Ygv-YwqoWAi2K_kQvKYJ-YEfxE",
-            authDomain: "orelai1.firebaseapp.com",
-            projectId: "orelai1",
-            storageBucket: "orelai1.appspot.com",
-            messagingSenderId: "1098355717793",
-            appId: "1:1098355717793:web:c0d2c1b5c10e8e9f3a3e3e"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        console.log("Firebase initialized with project:", firebaseConfig.projectId);
-        console.log("Storage bucket:", firebaseConfig.storageBucket);
-    </script>
 </head>
 <body>
     <nav class="navbar">
@@ -64,11 +46,8 @@
     <section id="portfolio" class="portfolio">
         <h2>תיק עבודות</h2>
         <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <video controls playsinline preload="metadata">
-                    <source src="https://firebasestorage.googleapis.com/v0/b/orelai1.appspot.com/o/videos%2FLUAI%2FIMG_5177.MOV?alt=media" type="video/quicktime">
-                    הדפדפן שלך לא תומך בתגית וידאו.
-                </video>
+            <div class="portfolio-item video-loaded">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/XHjKV_IFMUc" title="LUAI Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="overlay">
                     <h3>לואי LOAI</h3>
                     <p>סרטון אי אי ייחודי למוזיקה של לואי</p>
@@ -78,11 +57,8 @@
                     </div>
                 </div>
             </div>
-            <div class="portfolio-item">
-                <video controls playsinline preload="metadata">
-                    <source src="https://firebasestorage.googleapis.com/v0/b/orelai1.appspot.com/o/videos%2FMOR%2FIMG_5086.MOV?alt=media" type="video/quicktime">
-                    הדפדפן שלך לא תומך בתגית וידאו.
-                </video>
+            <div class="portfolio-item video-loaded">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/5iVUEPm2Oe8" title="MOR Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="overlay">
                     <h3>מור MOR</h3>
                     <p>סרטון אי אי דרמטי עם זום לעיניים</p>
@@ -92,11 +68,8 @@
                     </div>
                 </div>
             </div>
-            <div class="portfolio-item">
-                <video controls playsinline preload="metadata">
-                    <source src="https://firebasestorage.googleapis.com/v0/b/orelai1.appspot.com/o/videos%2FODEYA%2FIMG_5128.MOV?alt=media" type="video/quicktime">
-                    הדפדפן שלך לא תומך בתגית וידאו.
-                </video>
+            <div class="portfolio-item video-loaded">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/KBpYHw5jXyk" title="ODEYA Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="overlay">
                     <h3>אודיה ODEYA</h3>
                     <p>סרטון אי אי עם פרפרים מעופפים</p>
@@ -106,11 +79,8 @@
                     </div>
                 </div>
             </div>
-            <div class="portfolio-item">
-                <video controls playsinline preload="metadata">
-                    <source src="https://firebasestorage.googleapis.com/v0/b/orelai1.appspot.com/o/videos%2FSTEFAN%2FIMG_4989.MOV?alt=media" type="video/quicktime">
-                    הדפדפן שלך לא תומך בתגית וידאו.
-                </video>
+            <div class="portfolio-item video-loaded">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/zUYnA4fEJE8" title="STEFAN Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="overlay">
                     <h3>סטפן STEFAN</h3>
                     <p>סרטון אי אי עם אפקט אש דרמטי</p>
@@ -120,11 +90,8 @@
                     </div>
                 </div>
             </div>
-            <div class="portfolio-item">
-                <video controls playsinline preload="metadata">
-                    <source src="https://firebasestorage.googleapis.com/v0/b/orelai1.appspot.com/o/videos%2FYASMIN%26DUDA%2FIMG_5078.MOV?alt=media" type="video/quicktime">
-                    הדפדפן שלך לא תומך בתגית וידאו.
-                </video>
+            <div class="portfolio-item video-loaded">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/H76_uW1Fnso" title="YASMIN & DUDA Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="overlay">
                     <h3>יסמין ודודה YASMIN & DUDA</h3>
                     <p>סרטון אי אי עם פרפרים מסביב</p>
@@ -170,68 +137,5 @@
     </footer>
 
     <script src="main.js"></script>
-    
-    <script>
-        // קוד עזר לטעינת הסרטונים מ-Firebase
-        document.addEventListener('DOMContentLoaded', function() {
-            // התחברות לאחסון של Firebase
-            const storage = firebase.storage();
-            const storageRef = storage.ref();
-            
-            // רשימת הסרטונים
-            const videos = [
-                { folder: 'LUAI', file: 'IMG_5177.MOV', index: 0, fallbackUrl: 'https://www.youtube.com/embed/XHjKV_IFMUc' },
-                { folder: 'MOR', file: 'IMG_5086.MOV', index: 1, fallbackUrl: 'https://www.youtube.com/embed/5iVUEPm2Oe8' },
-                { folder: 'ODEYA', file: 'IMG_5128.MOV', index: 2, fallbackUrl: 'https://www.youtube.com/embed/KBpYHw5jXyk' },
-                { folder: 'STEFAN', file: 'IMG_4989.MOV', index: 3, fallbackUrl: 'https://www.youtube.com/embed/zUYnA4fEJE8' },
-                { folder: 'YASMIN&DUDA', file: 'IMG_5078.MOV', index: 4, fallbackUrl: 'https://www.youtube.com/embed/H76_uW1Fnso' }
-            ];
-            
-            // בדיקת זמינות הסרטונים ב-Firebase
-            videos.forEach(videoInfo => {
-                const videoRef = storageRef.child(`videos/${videoInfo.folder}/${videoInfo.file}`);
-                
-                // נסה לקבל URL לקובץ
-                videoRef.getDownloadURL()
-                    .then(url => {
-                        console.log(`Video found for ${videoInfo.folder}:`, url);
-                        // וידוא שהסרטון זמין
-                        const videoItems = document.querySelectorAll('.portfolio-item');
-                        const videoEl = videoItems[videoInfo.index].querySelector('video');
-                        if (videoEl) {
-                            videoEl.querySelector('source').src = url;
-                            videoEl.load();
-                        }
-                    })
-                    .catch(error => {
-                        console.error(`Error loading video for ${videoInfo.folder}:`, error);
-                        // החלף את הסרטון ב-iframe של YouTube כגיבוי
-                        const videoItems = document.querySelectorAll('.portfolio-item');
-                        const item = videoItems[videoInfo.index];
-                        const video = item.querySelector('video');
-                        
-                        if (video && item) {
-                            // הסר את תגית הוידאו ובמקומה שים iframe
-                            video.remove();
-                            const iframe = document.createElement('iframe');
-                            iframe.width = "100%";
-                            iframe.height = "100%";
-                            iframe.src = videoInfo.fallbackUrl;
-                            iframe.title = `${videoInfo.folder} Video`;
-                            iframe.frameBorder = "0";
-                            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-                            iframe.allowFullscreen = true;
-                            
-                            // הוסף את ה-iframe לפני ה-overlay
-                            const overlay = item.querySelector('.overlay');
-                            item.insertBefore(iframe, overlay);
-                            
-                            // הסר את הודעת "טוען..."
-                            item.classList.add('video-loaded');
-                        }
-                    });
-            });
-        });
-    </script>
 </body>
 </html> 
