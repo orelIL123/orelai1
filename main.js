@@ -4,9 +4,26 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 let particles;
 
-// טיפול באלמנטי הוידאו מיוטיוב בתיק העבודות
-function initVideos() {
-    console.log("Initializing YouTube videos");
+// טיפול בהטמעות אינסטגרם ובתיק העבודות
+function initInstagramPosts() {
+    console.log("Initializing Instagram posts");
+    
+    // בדיקה אם ה-SDK של אינסטגרם טעון כראוי
+    if (window.instgrm) {
+        console.log("Instagram SDK ready, processing embeds");
+        window.instgrm.Embeds.process();
+    } else {
+        console.log("Instagram SDK not ready, will retry");
+        // אם ה-SDK טרם נטען, נמתין ונסה שוב
+        setTimeout(() => {
+            if (window.instgrm) {
+                window.instgrm.Embeds.process();
+                console.log("Instagram embeds processed on retry");
+            } else {
+                console.error("Instagram SDK failed to load");
+            }
+        }, 2000);
+    }
     
     const portfolioItems = document.querySelectorAll('.portfolio-item');
     
@@ -28,122 +45,68 @@ function initVideos() {
 
 let mouseX = 0;
 let mouseY = 0;
-let targetX = 0;
-let targetY = 0;
-let windowHalfX = window.innerWidth / 2;
-let windowHalfY = window.innerHeight / 2;
-let particleCount = 1000;
-let particleGeometry, particleMaterial;
-let cursorParticles = [];
-const CURSOR_PARTICLE_COUNT = 50;
 
-function init() {
-    // Scene setup
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX / window.innerWidth - 0.5;
+    mouseY = e.clientY / window.innerHeight - 0.5;
+});
+
+function setupThreeJS() {
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
     document.getElementById('hero-3d').appendChild(renderer.domElement);
-    
-    // Create purple particles
-    particleGeometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const colors = new Float32Array(particleCount * 3);
-    
-    for (let i = 0; i < particleCount * 3; i += 3) {
-        positions[i] = (Math.random() - 0.5) * 10;
-        positions[i + 1] = (Math.random() - 0.5) * 10;
-        positions[i + 2] = (Math.random() - 0.5) * 10;
-
-        // Purple color with some variation
-        colors[i] = 0.5 + Math.random() * 0.5;     // R
-        colors[i + 1] = 0.2 + Math.random() * 0.3; // G
-        colors[i + 2] = 0.8 + Math.random() * 0.2; // B
-    }
-    
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-    particleMaterial = new THREE.PointsMaterial({
-        size: 0.05,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.8,
-        blending: THREE.AdditiveBlending
-    });
-
-    particles = new THREE.Points(particleGeometry, particleMaterial);
-    scene.add(particles);
-
-    // Create cursor particles
-    for (let i = 0; i < CURSOR_PARTICLE_COUNT; i++) {
-        const particle = {
-            x: 0,
-            y: 0,
-            age: 0,
-            vx: 0,
-            vy: 0,
-            size: Math.random() * 5 + 2,
-            color: `hsla(${280 + Math.random() * 40}, 80%, 60%, ${Math.random() * 0.5 + 0.5})`
-        };
-        cursorParticles.push(particle);
-    }
-
-    // Add ambient light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-
-    // Add point lights
-    const pointLight1 = new THREE.PointLight(0x9b59b6, 1, 100);
-    pointLight1.position.set(5, 5, 5);
-    scene.add(pointLight1);
-
-    const pointLight2 = new THREE.PointLight(0x8e44ad, 1, 100);
-    pointLight2.position.set(-5, -5, -5);
-    scene.add(pointLight2);
 
     camera.position.z = 5;
 
-    // Initialize cursor
-    initCursor();
-    
-    // Initialize portfolio items
-    initPortfolio();
-    
-    // Initialize smooth scroll
-    initSmoothScroll();
-    
-    // Initialize section transitions
-    initSectionTransitions();
-    
-    // Initialize videos
-    initVideos();
+    // Particle setup
+    const geometry = new THREE.BufferGeometry();
+    const vertices = [];
+
+    for (let i = 0; i < 2000; i++) {
+        vertices.push(
+            (Math.random() - 0.5) * 10,
+            (Math.random() - 0.5) * 10,
+            (Math.random() - 0.5) * 10
+        );
+    }
+
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+    const material = new THREE.PointsMaterial({
+        size: 0.05,
+        color: 0x9b59b6,
+        transparent: true,
+        opacity: 0.8,
+    });
+
+    particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    // Resize handler
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
 }
 
-function initCursor() {
-    const cursor = document.createElement('div');
-    const cursorDot = document.createElement('div');
-    cursor.className = 'cursor';
-    cursorDot.className = 'cursor-dot';
-    document.body.appendChild(cursor);
-    document.body.appendChild(cursorDot);
+function animate() {
+    requestAnimationFrame(animate);
 
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-        cursorDot.style.left = e.clientX + 'px';
-        cursorDot.style.top = e.clientY + 'px';
-    });
+    if (particles) {
+        particles.rotation.x += 0.001;
+        particles.rotation.y += 0.002;
 
-    // Hover effects for links and buttons
-    const links = document.querySelectorAll('a, button');
-    links.forEach(link => {
-        link.addEventListener('mouseenter', () => {
-            cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
-            cursor.style.borderColor = '#8e44ad';
-        });
-        link.addEventListener('mouseleave', () => {
-            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-            cursor.style.borderColor = '#9b59b6';
-        });
-    });
+        // Move based on mouse position
+        particles.rotation.x += mouseY * 0.01;
+        particles.rotation.y += mouseX * 0.01;
+    }
+
+    camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
+    camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
 }
 
 function initPortfolio() {
@@ -174,80 +137,33 @@ function initPortfolio() {
     });
 }
 
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-}
-
-function initSectionTransitions() {
+function revealSections() {
     const sections = document.querySelectorAll('section');
-    const observerOptions = {
-        root: null,
-        threshold: 0.1,
-        rootMargin: '0px'
-    };
-
-    const sectionObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
-
+    
     sections.forEach(section => {
-        sectionObserver.observe(section);
+        const sectionTop = section.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (sectionTop < windowHeight * 0.75) {
+            section.classList.add('visible');
+        }
     });
 }
 
-function animate() {
-    requestAnimationFrame(animate);
-
-    if (particles) {
-        // Rotate particles
-        particles.rotation.x += 0.001;
-        particles.rotation.y += 0.001;
-
-        // Update particle positions
-        const positions = particles.geometry.attributes.position.array;
-        for (let i = 0; i < positions.length; i += 3) {
-            positions[i + 1] += Math.sin(Date.now() * 0.001 + positions[i]) * 0.001;
-        }
-        particles.geometry.attributes.position.needsUpdate = true;
-    }
-
-    renderer.render(scene, camera);
-}
-
-// Handle window resize
-window.addEventListener('resize', () => {
-    windowHalfX = window.innerWidth / 2;
-    windowHalfY = window.innerHeight / 2;
-    
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-// Handle form submission
-document.getElementById('contact-form')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-    alert('תודה! נחזור אליך בהקדם.');
-    this.reset();
-});
-
-// Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-    init();
+document.addEventListener('DOMContentLoaded', () => {
+    setupThreeJS();
     animate();
+    initPortfolio();
+    initInstagramPosts();
+    
+    // Add reveal on scroll
+    window.addEventListener('scroll', revealSections);
+    revealSections(); // Initial check
+    
+    // Wait a bit and process Instagram embeds again to ensure they load
+    setTimeout(() => {
+        if (window.instgrm) {
+            window.instgrm.Embeds.process();
+        }
+    }, 3000);
 }); 
