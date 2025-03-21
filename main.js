@@ -4,18 +4,22 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 let particles;
 
-// עבור כל אייפריימים של יוטיוב, אנחנו כבר לא צריכים לטעון וידאו דינמית
-function initYoutubeVideos() {
-    console.log("Initializing YouTube videos");
+// עבור כל פוסטים של אינסטגרם
+function initInstagramPosts() {
+    console.log("Initializing Instagram posts");
     
-    // Add overlay hover effect for iframes
+    // Reload Instagram embed script when needed
+    if (window.instgrm) {
+        window.instgrm.Embeds.process();
+    }
+    
+    // Add overlay hover effect for Instagram embeds
     const portfolioItems = document.querySelectorAll('.portfolio-item');
     
     portfolioItems.forEach(item => {
         const overlay = item.querySelector('.overlay');
-        const iframe = item.querySelector('iframe');
         
-        if (iframe && overlay) {
+        if (overlay) {
             // Show overlay on hover
             item.addEventListener('mouseenter', () => {
                 overlay.style.opacity = '1';
@@ -115,8 +119,8 @@ function init() {
     // Initialize section transitions
     initSectionTransitions();
     
-    // Initialize YouTube videos instead of loading videos
-    initYoutubeVideos();
+    // Initialize Instagram posts instead
+    initInstagramPosts();
 }
 
 function initCursor() {
