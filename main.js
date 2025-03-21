@@ -4,25 +4,27 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 let particles;
 
-// Get Firebase Storage reference
-const storage = firebase.storage();
-
 // Load videos from Firebase Storage
 async function loadVideos() {
+    // Get Firebase Storage reference
+    const storage = firebase.storage();
+    console.log("Starting to load videos from Firebase Storage");
+    
     const videoElements = {
-        'luai-video': 'LUAI/IMG_5177.MOV',
-        'mor-video': 'MOR/IMG_5086.MOV',
-        'odeya-video': 'ODEYA/IMG_5128.MOV',
-        'stefan-video': 'STEFAN/IMG_4989.MOV',
-        'yasmin-duda-video': 'YASMIN&DUDA/IMG_5078.MOV'
+        'luai-video': 'videos/LUAI/IMG_5177.MOV',
+        'mor-video': 'videos/MOR/IMG_5086.MOV',
+        'odeya-video': 'videos/ODEYA/IMG_5128.MOV',
+        'stefan-video': 'videos/STEFAN/IMG_4989.MOV',
+        'yasmin-duda-video': 'videos/YASMIN&DUDA/IMG_5078.MOV'
     };
 
     for (const [elementId, videoPath] of Object.entries(videoElements)) {
         try {
             console.log(`Trying to load video: ${videoPath}`);
             const videoRef = storage.ref(videoPath);
+            console.log(`Created reference for: ${videoPath}`, videoRef);
             const videoUrl = await videoRef.getDownloadURL();
-            console.log(`Got URL for video: ${videoPath}`);
+            console.log(`Got URL for video: ${videoPath} - ${videoUrl}`);
             const videoElement = document.getElementById(elementId);
             if (videoElement) {
                 const sourceElement = videoElement.querySelector('source');
