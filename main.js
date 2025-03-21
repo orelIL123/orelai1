@@ -6,25 +6,20 @@ let particles;
 
 // Load videos from Firebase Storage
 async function loadVideos() {
-    // Get Firebase Storage reference
-    const storage = firebase.storage();
-    console.log("Starting to load videos from Firebase Storage");
+    console.log("Starting to load videos");
     
+    // קישורים ישירים לסרטונים במקום דרך Firebase
     const videoElements = {
-        'luai-video': 'videos/LUAI/IMG_5177.MOV',
-        'mor-video': 'videos/MOR/IMG_5086.MOV',
-        'odeya-video': 'videos/ODEYA/IMG_5128.MOV',
-        'stefan-video': 'videos/STEFAN/IMG_4989.MOV',
-        'yasmin-duda-video': 'videos/YASMIN&DUDA/IMG_5078.MOV'
+        'luai-video': 'https://orelil123.github.io/orelai1/videos/LUAI/IMG_5177.MOV',
+        'mor-video': 'https://orelil123.github.io/orelai1/videos/MOR/IMG_5086.MOV',
+        'odeya-video': 'https://orelil123.github.io/orelai1/videos/ODEYA/IMG_5128.MOV',
+        'stefan-video': 'https://orelil123.github.io/orelai1/videos/STEFAN/IMG_4989.MOV',
+        'yasmin-duda-video': 'https://orelil123.github.io/orelai1/videos/YASMIN&DUDA/IMG_5078.MOV'
     };
 
-    for (const [elementId, videoPath] of Object.entries(videoElements)) {
+    for (const [elementId, videoUrl] of Object.entries(videoElements)) {
         try {
-            console.log(`Trying to load video: ${videoPath}`);
-            const videoRef = storage.ref(videoPath);
-            console.log(`Created reference for: ${videoPath}`, videoRef);
-            const videoUrl = await videoRef.getDownloadURL();
-            console.log(`Got URL for video: ${videoPath} - ${videoUrl}`);
+            console.log(`Setting video URL: ${videoUrl}`);
             const videoElement = document.getElementById(elementId);
             if (videoElement) {
                 const sourceElement = videoElement.querySelector('source');
@@ -32,12 +27,12 @@ async function loadVideos() {
                 videoElement.load();
                 videoElement.play().catch(e => console.log('Auto-play failed:', e));
                 videoElement.parentElement.classList.add('video-loaded');
-                console.log(`Successfully loaded video: ${videoPath}`);
+                console.log(`Successfully loaded video: ${videoUrl}`);
             } else {
                 console.error(`Could not find element with id: ${elementId}`);
             }
         } catch (error) {
-            console.error(`Error loading video ${videoPath}:`, error);
+            console.error(`Error loading video ${videoUrl}:`, error);
             const videoElement = document.getElementById(elementId);
             if (videoElement) {
                 videoElement.parentElement.classList.add('video-error');
