@@ -4,60 +4,28 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 let particles;
 
-// Load videos from Firebase Storage
-async function loadVideos() {
-    console.log("Starting to load videos");
+// עבור כל אייפריימים של יוטיוב, אנחנו כבר לא צריכים לטעון וידאו דינמית
+function initYoutubeVideos() {
+    console.log("Initializing YouTube videos");
     
-    // קישורים ישירים לסרטונים
-    const videoElements = {
-        'luai-video': '/videos/LUAI/IMG_5177.MOV',
-        'mor-video': '/videos/MOR/IMG_5086.MOV',
-        'odeya-video': '/videos/ODEYA/IMG_5128.MOV',
-        'stefan-video': '/videos/STEFAN/IMG_4989.MOV',
-        'yasmin-duda-video': '/videos/YASMIN&DUDA/IMG_5078.MOV'
-    };
-
-    for (const [elementId, videoPath] of Object.entries(videoElements)) {
-        try {
-            console.log(`Setting video path: ${videoPath}`);
-            const videoElement = document.getElementById(elementId);
-            if (videoElement) {
-                // הגדרת ה-src ישירות על אלמנט הווידאו
-                videoElement.src = videoPath;
-                
-                // הוספת טיפול בשגיאה - אם יש שגיאה, ננסה להגדיר את ה-src שוב
-                videoElement.onerror = function() {
-                    console.log(`Error loading video: ${videoPath}, trying alternative...`);
-                    const altPath = videoPath.replace('.MOV', '.mp4');
-                    videoElement.src = altPath;
-                    videoElement.load();
-                };
-                
-                videoElement.load();
-                const playPromise = videoElement.play();
-                
-                if (playPromise !== undefined) {
-                    playPromise.catch(e => {
-                        console.log('Auto-play failed:', e);
-                        // הסר את השימוש באוטו-פליי אם צריך
-                        videoElement.setAttribute('autoplay', false);
-                        videoElement.setAttribute('controls', true);
-                    });
-                }
-                
-                videoElement.parentElement.classList.add('video-loaded');
-                console.log(`Successfully loaded video: ${videoPath}`);
-            } else {
-                console.error(`Could not find element with id: ${elementId}`);
-            }
-        } catch (error) {
-            console.error(`Error loading video ${videoPath}:`, error);
-            const videoElement = document.getElementById(elementId);
-            if (videoElement) {
-                videoElement.parentElement.classList.add('video-error');
-            }
+    // Add overlay hover effect for iframes
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    
+    portfolioItems.forEach(item => {
+        const overlay = item.querySelector('.overlay');
+        const iframe = item.querySelector('iframe');
+        
+        if (iframe && overlay) {
+            // Show overlay on hover
+            item.addEventListener('mouseenter', () => {
+                overlay.style.opacity = '1';
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                overlay.style.opacity = '0';
+            });
         }
-    }
+    });
 }
 
 let mouseX = 0;
@@ -147,8 +115,8 @@ function init() {
     // Initialize section transitions
     initSectionTransitions();
     
-    // Load videos from Firebase Storage
-    loadVideos();
+    // Initialize YouTube videos instead of loading videos
+    initYoutubeVideos();
 }
 
 function initCursor() {

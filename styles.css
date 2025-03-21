@@ -313,61 +313,21 @@ body {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.portfolio-item::after {
-    content: "טוען...";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 1.2rem;
-    z-index: 2;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-}
-
-.portfolio-item.video-loaded::after {
-    content: "";
-    opacity: 0;
-}
-
-.portfolio-item.video-error::after {
-    content: "שגיאה בטעינת הסרטון";
-    color: #ff4444;
-    opacity: 1;
-}
-
-.portfolio-item video {
+.portfolio-item iframe {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
+    border: none;
+}
+
+.portfolio-item:hover iframe {
+    transform: scale(1.05);
+}
+
+.portfolio-item::after {
+    content: "";
     opacity: 0;
-}
-
-.portfolio-item.video-loaded video {
-    opacity: 1;
-}
-
-.portfolio-item:hover::before {
-    opacity: 1;
-}
-
-.portfolio-item .overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 1rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-    color: white;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 2;
-}
-
-.portfolio-item:hover .overlay {
-    opacity: 1;
 }
 
 .portfolio-item h3 {
@@ -389,6 +349,19 @@ body {
     align-items: center;
     font-size: 0.9rem;
     opacity: 0.8;
+}
+
+.portfolio-item .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
 }
 
 /* Contact Section */
@@ -573,7 +546,7 @@ footer {
         }
         
         .portfolio-item {
-            height: 200px;
+            height: 250px;
         }
         
         .about-content p,
