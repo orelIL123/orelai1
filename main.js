@@ -4,53 +4,9 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 let particles;
 
-// טיפול בהטמעות אינסטגרם ובתיק העבודות
-function initInstagramPosts() {
-    console.log("Initializing Instagram posts");
-    
-    // פונקציית עזר לעיבוד הטמעות אינסטגרם
-    function processEmbeds() {
-        if (window.instgrm) {
-            console.log("Processing Instagram embeds");
-            window.instgrm.Embeds.process();
-        }
-    }
-    
-    // נסה לעבד את ההטמעות כעת
-    processEmbeds();
-    
-    // נסה לעבד שוב אחרי שניה, למקרה שה-SDK טרם נטען
-    setTimeout(processEmbeds, 1000);
-    
-    // נסה לעבד שוב אחרי 3 שניות
-    setTimeout(processEmbeds, 3000);
-    
-    // נסה לעבד שוב אחרי 5 שניות
-    setTimeout(processEmbeds, 5000);
-    
-    // בדוק אם צריך לטעון מחדש את ה-SDK
-    setTimeout(() => {
-        const iframes = document.querySelectorAll('.instagram-media iframe');
-        const allLoaded = Array.from(iframes).every(iframe => iframe.contentDocument || iframe.contentWindow);
-        
-        if (!allLoaded) {
-            console.log("Some Instagram embeds still not loaded, reloading SDK");
-            
-            // טען מחדש את סקריפט אינסטגרם
-            const oldScript = document.querySelector('script[src*="instagram.com/embed.js"]');
-            if (oldScript) {
-                oldScript.remove();
-            }
-            
-            const newScript = document.createElement('script');
-            newScript.async = true;
-            newScript.src = "//www.instagram.com/embed.js";
-            document.body.appendChild(newScript);
-            
-            // נסה לעבד שוב אחרי טעינת הסקריפט החדש
-            newScript.onload = processEmbeds;
-        }
-    }, 6000);
+// טיפול בפריטי התיק עבודות
+function initPortfolioItems() {
+    console.log("Initializing portfolio items");
     
     const portfolioItems = document.querySelectorAll('.portfolio-item');
     
@@ -67,6 +23,28 @@ function initInstagramPosts() {
                 overlay.style.opacity = '0';
             });
         }
+        
+        // אפקט תלת מימד בעת מעבר עכבר
+        item.addEventListener('mousemove', (e) => {
+            const rect = item.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const xc = rect.width / 2;
+            const yc = rect.height / 2;
+            
+            const dx = x - xc;
+            const dy = y - yc;
+            
+            const tiltX = -(dy / yc) * 10;
+            const tiltY = (dx / xc) * 10;
+            
+            item.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.05, 1.05, 1.05)`;
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            item.style.transform = '';
+        });
     });
 }
 
@@ -136,34 +114,6 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-function initPortfolio() {
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-    
-    portfolioItems.forEach(item => {
-        // 3D Tilt effect
-        item.addEventListener('mousemove', (e) => {
-            const rect = item.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const xc = rect.width / 2;
-            const yc = rect.height / 2;
-            
-            const dx = x - xc;
-            const dy = y - yc;
-            
-            const tiltX = -(dy / yc) * 10;
-            const tiltY = (dx / xc) * 10;
-            
-            item.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.05, 1.05, 1.05)`;
-        });
-        
-        item.addEventListener('mouseleave', () => {
-            item.style.transform = '';
-        });
-    });
-}
-
 function revealSections() {
     const sections = document.querySelectorAll('section');
     
@@ -180,17 +130,9 @@ function revealSections() {
 document.addEventListener('DOMContentLoaded', () => {
     setupThreeJS();
     animate();
-    initPortfolio();
-    initInstagramPosts();
+    initPortfolioItems();
     
     // Add reveal on scroll
     window.addEventListener('scroll', revealSections);
     revealSections(); // Initial check
-    
-    // Wait a bit and process Instagram embeds again to ensure they load
-    setTimeout(() => {
-        if (window.instgrm) {
-            window.instgrm.Embeds.process();
-        }
-    }, 3000);
 }); 
