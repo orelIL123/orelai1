@@ -8,22 +8,49 @@ let particles;
 function initInstagramPosts() {
     console.log("Initializing Instagram posts");
     
-    // בדיקה אם ה-SDK של אינסטגרם טעון כראוי
-    if (window.instgrm) {
-        console.log("Instagram SDK ready, processing embeds");
-        window.instgrm.Embeds.process();
-    } else {
-        console.log("Instagram SDK not ready, will retry");
-        // אם ה-SDK טרם נטען, נמתין ונסה שוב
-        setTimeout(() => {
-            if (window.instgrm) {
-                window.instgrm.Embeds.process();
-                console.log("Instagram embeds processed on retry");
-            } else {
-                console.error("Instagram SDK failed to load");
-            }
-        }, 2000);
+    // פונקציית עזר לעיבוד הטמעות אינסטגרם
+    function processEmbeds() {
+        if (window.instgrm) {
+            console.log("Processing Instagram embeds");
+            window.instgrm.Embeds.process();
+        }
     }
+    
+    // נסה לעבד את ההטמעות כעת
+    processEmbeds();
+    
+    // נסה לעבד שוב אחרי שניה, למקרה שה-SDK טרם נטען
+    setTimeout(processEmbeds, 1000);
+    
+    // נסה לעבד שוב אחרי 3 שניות
+    setTimeout(processEmbeds, 3000);
+    
+    // נסה לעבד שוב אחרי 5 שניות
+    setTimeout(processEmbeds, 5000);
+    
+    // בדוק אם צריך לטעון מחדש את ה-SDK
+    setTimeout(() => {
+        const iframes = document.querySelectorAll('.instagram-media iframe');
+        const allLoaded = Array.from(iframes).every(iframe => iframe.contentDocument || iframe.contentWindow);
+        
+        if (!allLoaded) {
+            console.log("Some Instagram embeds still not loaded, reloading SDK");
+            
+            // טען מחדש את סקריפט אינסטגרם
+            const oldScript = document.querySelector('script[src*="instagram.com/embed.js"]');
+            if (oldScript) {
+                oldScript.remove();
+            }
+            
+            const newScript = document.createElement('script');
+            newScript.async = true;
+            newScript.src = "//www.instagram.com/embed.js";
+            document.body.appendChild(newScript);
+            
+            // נסה לעבד שוב אחרי טעינת הסקריפט החדש
+            newScript.onload = processEmbeds;
+        }
+    }, 6000);
     
     const portfolioItems = document.querySelectorAll('.portfolio-item');
     

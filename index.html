@@ -47,7 +47,7 @@
         <h2>תיק עבודות</h2>
         <div class="portfolio-grid">
             <div class="portfolio-item video-loaded">
-                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DHRWa7Lu8n7/" data-instgrm-version="14" style="width:100%;height:100%;margin:0;background:#000;">
+                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DHRWa7Lu8n7/embed/" data-instgrm-version="14" style="width:100%;height:100%;margin:0;background:#000;">
                     <div style="padding:100% 0 0 0;position:relative;width:100%;height:100%;">
                         <iframe src="https://www.instagram.com/reel/DHRWa7Lu8n7/embed/" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
                     </div>
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="portfolio-item video-loaded">
-                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DHDoytIsOWe/" data-instgrm-version="14" style="width:100%;height:100%;margin:0;background:#000;">
+                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DHDoytIsOWe/embed/" data-instgrm-version="14" style="width:100%;height:100%;margin:0;background:#000;">
                     <div style="padding:100% 0 0 0;position:relative;width:100%;height:100%;">
                         <iframe src="https://www.instagram.com/reel/DHDoytIsOWe/embed/" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
                     </div>
@@ -77,7 +77,7 @@
                 </div>
             </div>
             <div class="portfolio-item video-loaded">
-                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DHDqiKpMRoD/" data-instgrm-version="14" style="width:100%;height:100%;margin:0;background:#000;">
+                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DHDqiKpMRoD/embed/" data-instgrm-version="14" style="width:100%;height:100%;margin:0;background:#000;">
                     <div style="padding:100% 0 0 0;position:relative;width:100%;height:100%;">
                         <iframe src="https://www.instagram.com/reel/DHDqiKpMRoD/embed/" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
                     </div>
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div class="portfolio-item video-loaded">
-                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DHGIAtwMFNg/" data-instgrm-version="14" style="width:100%;height:100%;margin:0;background:#000;">
+                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DHGIAtwMFNg/embed/" data-instgrm-version="14" style="width:100%;height:100%;margin:0;background:#000;">
                     <div style="padding:100% 0 0 0;position:relative;width:100%;height:100%;">
                         <iframe src="https://www.instagram.com/reel/DHGIAtwMFNg/embed/" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
                     </div>
@@ -107,9 +107,9 @@
                 </div>
             </div>
             <div class="portfolio-item video-loaded">
-                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DHDqiKpMRoD/" data-instgrm-version="14" style="width:100%;height:100%;margin:0;background:#000;">
+                <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DHGIAtwMFNg/embed/" data-instgrm-version="14" style="width:100%;height:100%;margin:0;background:#000;">
                     <div style="padding:100% 0 0 0;position:relative;width:100%;height:100%;">
-                        <iframe src="https://www.instagram.com/reel/DHDqiKpMRoD/embed/" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+                        <iframe src="https://www.instagram.com/reel/DHGIAtwMFNg/embed/" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
                     </div>
                 </blockquote>
                 <div class="overlay">
@@ -157,7 +157,23 @@
     </footer>
 
     <script src="main.js"></script>
-    <!-- Instagram Embed Script -->
-    <script async src="//www.instagram.com/embed.js"></script>
+    <!-- Instagram Embed Script - מטען בשתי דרכים שונות ליתר ביטחון -->
+    <script async src="https://www.instagram.com/embed.js"></script>
+    <script>
+        // נסיון נוסף לטעינת סקריפט אינסטגרם במקרה של בעיות
+        window.addEventListener('load', function() {
+            // אם הסקריפט לא נטען תוך 5 שניות, טען אותו שוב
+            setTimeout(function() {
+                if (!window.instgrm) {
+                    console.log("Instagram script not loaded, trying alternative loading method");
+                    var script = document.createElement('script');
+                    script.async = true;
+                    script.defer = true;
+                    script.src = "https://platform.instagram.com/en_US/embeds.js";
+                    document.body.appendChild(script);
+                }
+            }, 5000);
+        });
+    </script>
 </body>
 </html> 
